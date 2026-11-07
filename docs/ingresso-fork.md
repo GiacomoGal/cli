@@ -66,14 +66,14 @@ Le righe citano il testo al commit di base. «Destinazione» è il punto di ques
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | C1 | `AGENTS.md` | 7–11 | 1 | Chi aggiunge un servizio o dipendenze Node | Modifica delle API coperte, o pacchetti Node del repository | Nessun adattamento | Discovery a runtime (7–8) e `pnpm` al posto di `npm` (10–11). Nessun crate `google-*` è stato aggiunto. `Cargo.toml` non è stato modificato |
 | C2 | `AGENTS.md` | 13–22 | 1 | Chi modifica codice | Build, lint, test, coverage `codecov/patch` | Conflitti | I comandi restano nel contratto. Non sono stati eseguiti |
-| C3 | `AGENTS.md` | 24–36 | 1 | Autori di PR | Ogni PR, testo senza condizione | Conflitti | Obbligo di changeset. Confligge, nel testo, con C6 |
+| C3 | `AGENTS.md` | 24–36 | 1 | Autori di PR | Ogni PR, testo senza condizione | `.changeset/docs-fork-ingresso.md` | Obbligo adempiuto. Livello `patch`, il grado che la riga 36 assegna a fix e chore. Lo skip CI di C6 non è una deroga e non è stato usato per omettere il file. Il testo di `AGENTS.md` non è stato indebolito |
 | C4 | `AGENTS.md` | 81–153 | 1 | Chi aggiunge helper o flag | Nuovo input da CLI | Nessun adattamento | Validazione path, encoding, resource name. Gli esempi di path restano esempi di rifiuto nel contratto, non accessi |
 | C5 | `AGENTS.md` | 86–87, 167–205 | 1 | Agenti | Argomenti CLI non fidati; variabili d'ambiente fidati se impostate dalla persona | Host ref | I nomi delle variabili restano. I valori non sono stati letti. `.env` non è stato aperto |
-| C6 | `.github/workflows/policy.yml` | 42–49 | 6 | CI su `pull_request` | Il job di changeset esce subito se il diff non contiene `.rs` né `Cargo.toml` / `Cargo.lock` | Conflitti | Condizione più stretta di C3. Il workflow non è stato lanciato |
+| C6 | `.github/workflows/policy.yml` | 42–49 | 6 | CI su `pull_request` | Il job di changeset esce subito se il diff non contiene `.rs` né `Cargo.toml` / `Cargo.lock` | C3 | Enforcement più stretto di C3. Un exit 0 non modifica il contratto e non autorizza a omettere il file. Workflow non modificato e non lanciato |
 | C7 | `.github/workflows/policy.yml` | 35–41 | 6 | CI | Presenza di crate `google-*` in `Cargo.toml` | Nessun adattamento | Regola allineata a C1. Non eseguita da questa sessione |
-| C8 | `docs/CONTRIBUTING.md` | 62–74, 88–93 | 2 | Contributori | PR con codice e validazione | Conflitti | Stesso obbligo di changeset e di `cargo test` di C2/C3 |
-| C9 | `.gemini/style_guide.md` | 1–26 | 5 | Review nell'albero `.gemini` | Review di codice | Conflitti | Ripete C1–C5. Rango del workflow, non una norma nuova del fork |
-| C10 | `.github/PULL_REQUEST_TEMPLATE.md` | 1–16 | 2 | Autori di PR | Apertura di una PR | Ricevuta della PR | Chiede dry-run, fmt, clippy, test e changeset. Il dry-run non esiste perché nessun comando è stato eseguito |
+| C8 | `docs/CONTRIBUTING.md` | 62–74, 88–93 | 2 | Contributori | PR con codice e validazione | C3 per il changeset; conflitti per i test | Il changeset delle righe 62–74 è lo stesso file di C3. `cargo test` alle righe 88–93 resta non eseguito |
+| C9 | `.gemini/style_guide.md` | 1–26 | 5 | Review nell'albero `.gemini` | Review di codice | C3 per le righe 18–20 | Quelle righe ripetono il changeset `patch` per i chore. Adempiute dallo stesso file di C3. Il resto del file resta a rango 5 e non è stato riscritto |
+| C10 | `.github/PULL_REQUEST_TEMPLATE.md` | 1–16 | 2 | Autori di PR | Apertura di una PR | C3 per il changeset; ricevuta della PR per il resto | La voce changeset è adempiuta da C3. Dry-run, fmt, clippy e test non sono stati eseguiti: questa modifica non aggiunge comandi né Rust |
 | C11 | `AGENTS.md` | 60–79 | 1 | Chi rigenera i demo | Uso di VHS | Nessun adattamento | Resta la norma dei demo |
 | C12 | `.agent/skills/vhs.md` | 1–40 e seguito | 5 | Chi edita i `.tape` | Quel compito | Nessun adattamento | Annidato. Non sostituisce C11. Fuori da questo mandato |
 | C13 | `src/helpers/README.md` | 1–40 | 5 | Chi aggiunge helper | Modifica dei helper | Esempi fuori mandato | Documentazione di modulo, non ingresso del fork. Non modificata |
@@ -115,7 +115,7 @@ Esempi, invio ed admin restano nei file upstream (S7, S8, S9, C13). Questo manda
 
 ## Adattamenti minimi in questo fork
 
-Solo quattro file Markdown.
+Cinque file Markdown, contati sul diff cumulativo rispetto al commit di base.
 
 | File | Modifica |
 | --- | --- |
@@ -123,16 +123,17 @@ Solo quattro file Markdown.
 | `README.md` | Un avviso subito sotto il titolo, prima del testo upstream |
 | `AGENTS.md` | Una nota subito sotto il titolo. Le sezioni sotto la nota restano il contratto di rango 1 |
 | `CLAUDE.md` | Un paragrafo che punta qui e conferma il rinvio a `AGENTS.md` |
+| `.changeset/docs-fork-ingresso.md` | Changeset `patch` richiesto da C3. Non è una modifica di `.changeset/config.json` |
 
 Nessuna sincronizzazione di memorie. Al commit di base una ricerca di `memory` nei file `*.md` non ha restituito occorrenze, e non c'è un file il cui nome contenga `memory`. Le occorrenze introdotte da questa modifica sono solo le frasi che escludono quella sincronizzazione. Il symlink OpenClaw (S4) e il workflow di sync skill (S11) non sono stati eseguiti.
 
-Nessun altro file è stato modificato: niente codice, configurazione, script, dati, media, lockfile, skill, changeset, workflow.
+Nessun altro file è stato modificato: niente codice, configurazione, script, dati, media, lockfile, skill o workflow.
 
 ## Conflitti dichiarati
 
 Restano aperti. I testi che li contengono non sono stati modificati per farli coincidere.
 
-1. **C3, C8, C9 e C10 contro C6.** `AGENTS.md`, `docs/CONTRIBUTING.md`, `.gemini/style_guide.md` e il template di PR chiedono un changeset per ogni PR. `policy.yml` salta quel controllo quando il diff non tocca Rust o Cargo. Questo diff è solo Markdown. Non è stato aggiunto un file in `.changeset/`, perché quel file è l'innesco di versionamento descritto da `release-changesets.yml` e da S11, e perché il conflitto non viene chiuso riscrivendo una delle due regole. La review può comunque richiederlo.
+1. **C6 non deroga C3.** `AGENTS.md` 24–36, `docs/CONTRIBUTING.md` 62–74, `.gemini/style_guide.md` 18–20 e il template di PR chiedono un changeset per ogni PR. Nessuna di queste fonti introduce un'eccezione per il solo Markdown. `policy.yml` 42–49 può uscire 0 quando il diff non tocca `.rs`, `Cargo.toml` o `Cargo.lock`: limita l'enforcement automatico, non il contratto. Il file `.changeset/docs-fork-ingresso.md` adempie l'obbligo, con `patch` come da riga 36 per un chore documentale. Il nome del pacchetto è quello già scritto in `AGENTS.md` e in `package.json`. I testi di `AGENTS.md`, `policy.yml` e `release-changesets.yml` non sono stati modificati. Sul primo head della PR il file mancava; quella omissione non resta. Il workflow di release, innesco `push` su `main` o `workflow_dispatch`, non è stato eseguito: pubblicare o versionare il pacchetto è fuori da questa correzione.
 2. **C2, C8 e C10 contro il perimetro di questa modifica.** Il contratto di codice chiede `cargo test`, clippy, fmt e, per un comando nuovo, un dry-run. Questa modifica non aggiunge comandi. Quei controlli non sono stati eseguiti. Le righe restano obbligatorie per il codice.
 3. **H1 e H2 contro lo stato unknown.** Il README insegna installazione e login. Sul fork, uso, installazione e account non sono accertati. Le istruzioni restano. Il banner dice che sono testo, non uno stato osservato, e che nominare un comando non autorizza a eseguirlo.
 4. **S3 e S5 contro il conteggio e contro S6.** Le cifre del README e la frase sull'install block di OpenClaw non coincidono con i file contati e con `skills/gws-shared/SKILL.md` righe 1–66. Le frasi upstream non sono state corrette.
@@ -157,15 +158,16 @@ Restano aperti. I testi che li contengono non sono stati modificati per farli co
 
 ## Verifiche, effetti, limiti
 
-Effetto di questa modifica, una volta integrata sul fork: quattro file Markdown. Nessun binario, nessun account, nessuna skill installata, nessuna chiamata alle API Google.
+Effetto cumulativo rispetto al commit di base, una volta integrata sul fork: cinque file Markdown, tra cui `.changeset/docs-fork-ingresso.md`. Nessun binario, nessun account, nessuna skill installata, nessuna chiamata alle API Google. Il push del branch di PR non è un push su `main` e non invoca il workflow di release.
 
 Verifiche fatte, tutte documentali:
 
-- `git rev-parse` di `HEAD` e `origin/main`, uguali a `7e22a3d0e31e41b70bbfcb53317a62730a3284bb`.
+- All'inizio della sessione, `HEAD` e `origin/main` erano `7e22a3d0e31e41b70bbfcb53317a62730a3284bb`. I commit di questa PR stanno sul branch, non su `main`.
 - API GitHub pubblica del fork: fork, parent, branch, commit, compare, elenco PR. Dettaglio nella tabella di stato.
 - Presenza di path citati: `LICENSE`, `docs/skills.md`, `docs/demo.tape`, `docs/CONTRIBUTING.md`, `AGENTS.md`, `CLAUDE.md`, `CONTEXT.md`, `gemini-extension.json`, `.env.example`. Assenza di `.env`.
 - Conteggio dei `SKILL.md` e incrocio con i link di `docs/skills.md`.
-- Lettura dei Markdown di contratto elencati nella matrice, più le righe 1–67 di `skills/gws-shared/SKILL.md` e le righe citate dei workflow. I corpi delle skill di invio e admin non sono stati aperti.
+- Lettura dei Markdown di contratto elencati nella matrice, più le righe 1–66 di `skills/gws-shared/SKILL.md` e le righe citate dei workflow. I corpi delle skill di invio e admin non sono stati aperti.
+- Forma del changeset confrontata con `AGENTS.md` 29–36 e con changeset storici già nel parent (stesso front matter `"@googleworkspace/cli": patch`). Nessun comando `changeset` è stato lanciato.
 
 Limiti, da non leggere come un esito positivo:
 

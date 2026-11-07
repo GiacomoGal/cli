@@ -1,5 +1,8 @@
 <h1 align="center">gws</h1>
 
+> [!IMPORTANT]
+> **Fork `GiacomoGal/cli` — human entry.** Use, installation, and any Google account for this fork are unknown. Read [`docs/ingresso-fork.md`](docs/ingresso-fork.md) before the sections below. Those sections are the upstream text kept in this tree. They are not a record that this fork is installed, authenticated, or in use, and a command named there is not an authorization to run it.
+
 **One CLI for all of Google Workspace — built for humans and AI agents.**<br>
 Drive, Gmail, Calendar, and every Workspace API. Zero boilerplate. Structured JSON output. 40+ agent skills included.
 

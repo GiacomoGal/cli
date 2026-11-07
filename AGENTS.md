@@ -1,5 +1,8 @@
 # AGENTS.md
 
+> [!NOTE]
+> **Fork perimeter (`GiacomoGal/cli`).** Human entry, and the unresolved status of use, installation, and account: [`docs/ingresso-fork.md`](docs/ingresso-fork.md). The sections below remain the upstream contribution contract. This note does not replace them, does not sync memory or skills, and does not authorize an account or a command.
+
 ## Project Overview
 
 `gws` is a Rust CLI tool for interacting with Google Workspace APIs. It dynamically generates its command surface at runtime by parsing Google Discovery Service JSON documents.
